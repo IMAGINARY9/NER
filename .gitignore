@@ -160,15 +160,99 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+# PyCharm and other IDEs
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
 
 # Ruff stuff:
 .ruff_cache/
 
 # PyPI configuration file
 .pypirc
+
+# Project specific
+
+# ## Data files
+# data/*.csv
+# data/*.json
+# data/raw/
+# data/processed/
+# data/external/
+# !data/sample_data.csv
+
+## Model files
+models/*.keras
+models/*.h5
+models/*.pkl
+models/checkpoints/
+models/archived/
+models/tmp/
+!models/README.md
+
+## Logs and temporary files
+logs/*
+!logs/README.md
+*.log
+*.tmp
+*.temp
+*.bak
+temp/
+tmp/
+
+## Cache
+cache/
+.cache/
+__pycache__/
+*.py[cod]
+
+## Evaluation results
+evaluations/*/
+!evaluations/README.md
+
+## Visualization outputs
+visualizations/*
+!visualizations/README.md
+# *.png
+# *.jpg
+# *.jpeg
+# *.pdf
+# *.svg
+
+## Notebook checkpoints and outputs
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+notebooks/**/*.nbconvert.ipynb
+
+## Local configuration
+config.local.json
+*.local.yml
+*.local.yaml
+.env.local
+
+## Training artifacts
+training_history*.csv
+predictions*.json
+metrics*.json
+
+## Dependencies
+venv/
+.venv/
+env/
+.env/
+.python-version
+
+## OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## Development tools
+.pytest_cache/
+.coverage
+htmlcov/
+.benchmarks/
+profiling/
+*.profiling
+*.prof

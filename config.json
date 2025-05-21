@@ -1,0 +1,35 @@
+{
+    "train": {
+        "batch_size": 32,
+        "learning_rate": 2e-5,
+        "epochs": 10,
+        "early_stopping_patience": 3,
+        "max_sequence_length": 128,
+        "validation_split": 0.1,
+        "test_split": 0.1
+    },
+    "model": {
+        "model_type": "bilstm-crf",
+        "embedding_dim": 100,
+        "hidden_dim": 128,
+        "dropout_rate": 0.1,
+        "recurrent_dropout_rate": 0.1
+    },
+    "data": {
+        "dataset_path": "./data/ner.csv",
+        "cache_dir": "./cache"
+    },
+    "optimization": {
+        "use_xla": true,
+        "use_mixed_precision": true,
+        "use_dataset_optimization": true,
+        "use_gradient_accumulation": false,
+        "gradient_accumulation_steps": 2,
+        "prefetch_buffer_size": -1
+    },
+    "logging": {
+        "log_dir": "./logs",
+        "tensorboard": true,
+        "save_model_summary": true
+    }
+}
