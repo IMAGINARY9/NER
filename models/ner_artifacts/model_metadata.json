@@ -1,0 +1,27 @@
+{
+  "max_seq_length": 128,
+  "vocab_size": 35171,
+  "num_tags": 19,
+  "tag_names": [
+    "",
+    "[UNK]",
+    "O",
+    "B-GEO",
+    "B-TIM",
+    "B-ORG",
+    "I-PER",
+    "B-PER",
+    "I-ORG",
+    "B-GPE",
+    "I-GEO",
+    "I-TIM",
+    "B-ART",
+    "B-EVE",
+    "I-ART",
+    "I-EVE",
+    "B-NAT",
+    "I-GPE",
+    "I-NAT"
+  ],
+  "model_path": "models/ner_model_final_20250520-204254.keras"
+}

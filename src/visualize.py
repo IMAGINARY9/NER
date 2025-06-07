@@ -115,28 +115,43 @@ def visualize_confusion_matrix(confusion_matrix, labels, title='Confusion Matrix
     """
     Visualize a confusion matrix for the NER tags.
     """
-    fig = plt.figure(figsize=figsize)
-    
+    # Reduce figsize to make cells smaller, e.g., (8, 6)
+    fig = plt.figure(figsize=(8, 6))
+
     # Create a normalized confusion matrix to handle highly imbalanced data
     norm_cm = confusion_matrix.astype('float') / (confusion_matrix.sum(axis=1)[:, np.newaxis] + 1e-10)
-    
+
     # Use a logarithmic color scale for better visualization of imbalanced data
     with np.errstate(divide='ignore'):
         log_cm = np.log10(confusion_matrix + 1)  # Add 1 to avoid log(0)
-    
-    # Create the heatmap with custom normalization
-    sns.heatmap(log_cm, annot=confusion_matrix, fmt='d', 
-                cmap='viridis', xticklabels=labels, yticklabels=labels, 
-                cbar=True, linewidths=0.5, linecolor='black')
-    
-    plt.title(title)
-    plt.xlabel('Predicted Labels')
-    plt.ylabel('True Labels')
+
+    # Set font scale larger for text
+    sns.set(font_scale=1.2)
+
+    # Create the heatmap with smaller cells and larger text
+    ax = sns.heatmap(
+        log_cm,
+        annot=confusion_matrix,
+        fmt='d',
+        cmap='viridis',
+        xticklabels=labels,
+        yticklabels=labels,
+        cbar=True,
+        linewidths=0.5,
+        linecolor='black',
+        annot_kws={"size": 12}  # Increase annotation text size
+    )
+
+    plt.title(title, fontsize=16)
+    plt.xlabel('Predicted Labels', fontsize=14)
+    plt.ylabel('True Labels', fontsize=14)
+    plt.xticks(fontsize=12, rotation=45, ha='right')
+    plt.yticks(fontsize=12)
     plt.tight_layout()
     if save_path:
         plt.savefig(save_path)
         print(f"Saved confusion matrix to {save_path}")
-    
+
     plt.show()
     
     # Close the figure to prevent it from showing again later
@@ -148,33 +163,39 @@ def visualize_class_distribution(class_distribution, title='Class Distribution',
     Visualize the distribution of entity classes.
     """
     fig = plt.figure(figsize=figsize)
-    
+
     # Sort by frequency
     labels, values = zip(*sorted(class_distribution.items(), key=lambda x: x[1], reverse=True))
-    
+
     # Define colors for the bars - use a sequential palette to better highlight differences
     colors = sns.color_palette("viridis", len(labels))
 
-    # Create bar chart
-    bar = plt.bar(labels, values, color=colors)
-    
-    # Add values on top of bars
+    # Decrease bar width for thinner bars
+    bar_width = 0.5  # Default is 0.8, so 0.5 is thinner
+    x = np.arange(len(labels))
+    bar = plt.bar(x, values, color=colors, width=bar_width)
+
+    # Increase font size for text
+    font_size = 14
+
+    # Add values on top of bars with larger text
     for rect in bar:
         height = rect.get_height()
         plt.text(rect.get_x() + rect.get_width()/2., height + 5,
-                 f'{height:,}', ha='center', va='bottom')
-    
-    plt.title(title)
-    plt.xlabel('Entity Classes')
-    plt.ylabel('Count')
-    plt.xticks(rotation=45, ha='right')
+                 f'{height:,}', ha='center', va='bottom', fontsize=font_size)
+
+    plt.title(title, fontsize=font_size + 2)
+    plt.xlabel('Entity Classes', fontsize=font_size)
+    plt.ylabel('Count (log scale)', fontsize=font_size)
+    plt.xticks(x, labels, rotation=45, ha='right', fontsize=font_size)
+    plt.yticks(fontsize=font_size)
+    plt.yscale('log')
     plt.tight_layout()
     if save_path:
         plt.savefig(save_path)
         print(f"Saved class distribution to {save_path}")
-    
+
     plt.show()
-    
     # Close the figure to prevent it from appearing again later
     plt.close(fig)
 
@@ -640,7 +661,7 @@ def main(model_path, data_path=None, output_dir=None, viz_type='all'):
             plot_path = os.path.join(output_dir, "model_architecture.png")
             # Ensure tf.keras.utils.plot_model is available
             if hasattr(tf.keras.utils, 'plot_model'):
-                tf.keras.utils.plot_model(model, to_file=plot_path, show_shapes=True, show_layer_names=True, expand_nested=True)
+                tf.keras.utils.plot_model(model, to_file=plot_path, show_shapes=True, show_layer_names=True, expand_nested=True, dpi=300)
                 logger.info(f"Model architecture plot saved to {plot_path}")
             else:
                 logger.warning("tf.keras.utils.plot_model not available in this TensorFlow version.")

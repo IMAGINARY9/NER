@@ -1,0 +1,21 @@
+{
+  "": 0,
+  "[UNK]": 1,
+  "O": 2,
+  "B-GEO": 3,
+  "B-TIM": 4,
+  "B-ORG": 5,
+  "I-PER": 6,
+  "B-PER": 7,
+  "I-ORG": 8,
+  "B-GPE": 9,
+  "I-GEO": 10,
+  "I-TIM": 11,
+  "B-ART": 12,
+  "B-EVE": 13,
+  "I-ART": 14,
+  "I-EVE": 15,
+  "B-NAT": 16,
+  "I-GPE": 17,
+  "I-NAT": 18
+}
