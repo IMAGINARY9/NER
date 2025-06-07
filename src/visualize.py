@@ -654,20 +654,29 @@ def main(model_path, data_path=None, output_dir=None, viz_type='all'):
                         # Handle the case where a metric might be directly a float value
                         f.write(f"  {entity}: Value={emetrics:.4f}\\n")
         logger.info(f"Saved summary to {summary_path}")
-    
-    else: # if not data_path
-        logger.info("No data path provided. Model loaded. To evaluate and visualize metrics, provide a data path.")
+
         try:
             plot_path = os.path.join(output_dir, "model_architecture.png")
             # Ensure tf.keras.utils.plot_model is available
             if hasattr(tf.keras.utils, 'plot_model'):
-                tf.keras.utils.plot_model(model, to_file=plot_path, show_shapes=True, show_layer_names=True, expand_nested=True, dpi=300)
+                tf.keras.utils.plot_model(
+                    model,
+                    to_file=plot_path,
+                    show_shapes=False,
+                    show_layer_names=False,
+                    expand_nested=False,
+                    dpi=300,
+                )
                 logger.info(f"Model architecture plot saved to {plot_path}")
             else:
                 logger.warning("tf.keras.utils.plot_model not available in this TensorFlow version.")
         except Exception as e:
             logger.warning(f"Could not plot model architecture: {e}")
             logger.exception("Traceback for plotting error:")
+    
+    else: # if not data_path
+        logger.info("No data path provided. Model loaded. To evaluate and visualize metrics, provide a data path.")
+
 
 if __name__ == "__main__":
     # Parse arguments
